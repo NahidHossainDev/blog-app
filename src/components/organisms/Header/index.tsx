@@ -2,6 +2,7 @@ import { Container } from "@components/atoms";
 import { Brand } from "@components/molecules";
 import { navItems } from "@utils/constants";
 import { Affix, Menu } from "antd";
+import Link from "next/link";
 import { FC } from "react";
 import styled from "styled-components";
 
@@ -19,8 +20,15 @@ export const MainHeader: FC = () => {
 							className='menu-items text-center'
 							mode='horizontal'
 							defaultSelectedKeys={["HOME"]}
-							items={navItems}
-						/>
+						>
+							{navItems.map((el, i) => (
+								<Menu.Item key={i}>
+									<Link href='/' key={i}>
+										{el?.label}
+									</Link>
+								</Menu.Item>
+							))}
+						</Menu>
 					</div>
 				</Container>
 			</Affix>

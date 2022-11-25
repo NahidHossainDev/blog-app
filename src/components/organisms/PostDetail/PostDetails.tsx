@@ -12,7 +12,7 @@ export const PostDetails: FC = () => {
 			<h4 className=' text-center text-uppercase fw-400'>{title}</h4>
 
 			<div className='m-auto' style={{ maxWidth: "250px" }}>
-				<Divider style={{ width: "20%" }}>
+				<Divider>
 					<i className='text-primary fw-400'>July 22, 2015</i>
 				</Divider>
 			</div>

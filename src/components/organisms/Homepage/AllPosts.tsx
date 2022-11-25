@@ -13,7 +13,7 @@ export const AllPosts: FC = () => {
 			<Row>
 				{allPosts?.map((el) => (
 					<Col key={el.id} md={12}>
-						<SinglePost data={el} />
+						<SinglePost data={el} isComment isCrossBtn />
 					</Col>
 				))}
 			</Row>

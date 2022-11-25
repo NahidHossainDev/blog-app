@@ -10,32 +10,36 @@ import styled from "styled-components";
 
 const { Paragraph, Text } = Typography;
 
-export const SinglePost: FC<PropsType> = ({ data, isComment }) => {
+export const SinglePost: FC<PropsType> = ({ data, isComment, isCrossBtn }) => {
 	const { id, title, body, userId } = data || {};
 	const dispatch = useDispatch();
 
 	return (
 		<Wrapper bordered={false}>
-			<Icon
-				role='button'
-				onClick={() => dispatch(deletePost(id))}
-				className='cross-btn'
-				path={close}
-				fill='white'
-				height={30}
-				width={30}
-			/>
+			{isCrossBtn && (
+				<Icon
+					role='button'
+					onClick={() => dispatch(deletePost(id))}
+					className='cross-btn'
+					path={close}
+					fill='white'
+					height={30}
+					width={30}
+				/>
+			)}
 			<Image src={`https://picsum.photos/${600}/${300}?random=${id}`} width='100%' alt={title} />
 			<h5 className='mt-3 text-center'>
-				<Link href={`post/${id}`}>
+				<Link href={`/post/${id}`}>
 					<Text ellipsis className='text-uppercase fw-400' style={{ width: 250 }}>
 						{title}
 					</Text>
 				</Link>
 			</h5>
-			<Divider>
-				<i className='text-primary fw-400'>July 22, 2015</i>
-			</Divider>
+			<div className='m-auto' style={{ maxWidth: "250px" }}>
+				<Divider>
+					<i className='text-primary fw-400'>July 22, 2015</i>
+				</Divider>
+			</div>
 			<Paragraph ellipsis={{ rows: 2, expandable: true, symbol: "More" }}>{body}</Paragraph>
 
 			{isComment && (
@@ -52,14 +56,18 @@ export const SinglePost: FC<PropsType> = ({ data, isComment }) => {
 interface PropsType {
 	data: IPosts;
 	isComment?: boolean;
+	isCrossBtn?: boolean;
 }
 
 const Wrapper = styled(Card)`
 	position: relative;
+	.ant-card-body {
+		padding: 0.75rem;
+	}
 	.cross-btn {
 		position: absolute;
-		top: 2rem;
-		right: 2rem;
+		top: 1.5rem;
+		right: 1.5rem;
 		z-index: 999;
 		&:hover + .ant-image img {
 			transition: 0.5s;

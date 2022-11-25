@@ -1,16 +1,21 @@
 import { wrapper } from "@store";
 import type { AppProps } from "next/app";
-import { Provider } from "react-redux";
+import { useRouter } from "next/router";
+import { default as nProgress, default as NProgress } from "nprogress";
+import "nprogress/nprogress.css";
+import { useEffect } from "react";
 import "../../public/scss/app.scss";
 
-function App({ Component, ...rest }: AppProps) {
-	const { store, props } = wrapper.useWrappedStore(rest);
-	const { pageProps } = props;
-	return (
-		<Provider store={store}>
-			<Component {...pageProps} />
-		</Provider>
-	);
+function App({ Component, pageProps }: AppProps) {
+	const router = useRouter();
+
+	useEffect(() => {
+		nProgress.configure({ showSpinner: true });
+		router.events.on("routeChangeStart", () => NProgress.start());
+		router.events.on("routeChangeComplete", () => NProgress.done());
+		router.events.on("routeChangeError", () => NProgress.done());
+	}, []);
+	return <Component {...pageProps} />;
 }
 
 export default wrapper.withRedux(App);
